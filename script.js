@@ -78,3 +78,10 @@ document.getElementById('prev')?.addEventListener('click', prevSlide);
 
 /* ---------------- INIT ---------------- */
 updateSlider();
+
+
+
+const track = document.getElementById('recent-notifications');
+
+// clone all items once
+track.innerHTML += track.innerHTML;
