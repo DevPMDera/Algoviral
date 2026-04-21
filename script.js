@@ -27,7 +27,7 @@ if (track) {
 // ----------- DATA -----------
 const data = {
   instagram: [
-    { name: "Likes", price: 500, speed: "Instant Delivery" },
+    { name: "Likes", price: 500, speed: "Instant" },
     { name: "Followers", price: 1500, speed: "1 - 2 Hours" },
     { name: "Views", price: 300, speed: "Instant" },
     { name: "Comments", price: 800, speed: "30 mins" },
@@ -65,7 +65,8 @@ function renderServices() {
     section.innerHTML = data[id].map(service => `
       <div class="card">
         <h3>${service.name}</h3>
-        <p class="price">₦${service.price} (per 1000)</p>
+        <p class="price">₦${service.price}</p>
+        <p class="per-room-txt">(per 1000)</p>
         <p class="speed">${service.speed}</p>
         <button class="buy-btn" data-platform="${id}" data-name="${service.name}" data-price="${service.price}">
           Buy Now
