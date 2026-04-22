@@ -154,3 +154,101 @@ function typeEffect() {
 
 // start animation
 document.addEventListener("DOMContentLoaded", typeEffect);
+
+
+// ----------- MODAL ELEMENTS -----------
+const modal = document.getElementById('orderModal');
+const closeModal = document.getElementById('closeModal');
+
+const categoryField = document.getElementById('modal-category');
+const descriptionField = document.getElementById('modal-description');
+const linkField = document.getElementById('modal-link');
+const quantityField = document.getElementById('modal-quantity');
+const chargeField = document.getElementById('modal-charge');
+
+let currentPrice = 0;
+
+// OPEN MODAL
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('buy-btn')) {
+
+    const platform = e.target.dataset.platform;
+    const service = e.target.dataset.name;
+    const price = Number(e.target.dataset.price);
+
+    currentPrice = price;
+
+    categoryField.value = platform;
+    descriptionField.value = `${service} service (${platform}) - ₦${price} per 1000`;
+    quantityField.value = "";
+    chargeField.value = "";
+
+    modal.style.display = "flex";
+  }
+});
+
+// CLOSE MODAL
+closeModal.addEventListener('click', () => {
+  modal.style.display = "none";
+});
+
+// CLOSE ON OUTSIDE CLICK
+window.addEventListener('click', (e) => {
+  if (e.target === modal) {
+    modal.style.display = "none";
+  }
+});
+
+
+// ----------- PRICE CALCULATION -----------
+quantityField.addEventListener('input', () => {
+  const qty = Number(quantityField.value);
+
+  if (!qty || qty <= 0) {
+    chargeField.value = "";
+    return;
+  }
+
+  const total = (qty / 1000) * currentPrice;
+  chargeField.value = total.toLocaleString();
+});
+
+
+document.getElementById('confirmOrder').addEventListener('click', () => {
+  const category = categoryField.value;
+  const description = descriptionField.value;
+  const link = linkField.value;
+  const quantity = quantityField.value;
+  const charge = chargeField.value;
+
+ if (!link || !quantity || !charge) {
+  alert("Please fill all fields");
+  return;
+}
+  
+fetch("https://hook.eu1.make.com/cc7ua14hn8ya11ofj6o5nrnhffsclusm", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    category,
+    description,
+    link,
+    quantity,
+    charge
+  }),
+  mode: "no-cors" // 🔥 THIS FIXES IT
+})
+.then(() => {
+  alert("Order sent successfully!");
+  modal.style.display = "none";
+})
+.catch(() => {
+  alert("Failed to send order");
+});
+  
+  linkField.value = "";
+quantityField.value = "";
+chargeField.value = "";
+});
