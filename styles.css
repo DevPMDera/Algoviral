@@ -282,10 +282,10 @@ body.dark-mode #themeToggle {
   padding: 8px;
   border-radius: 6px;
   border: 1px solid #ccc;
-}
-
+}   
+   
 #confirmOrder {
-  background: #00AD0B;
+  background: #00AD0B; 
   color: white;
   padding: 10px;
   border: none;
@@ -297,6 +297,56 @@ body.dark-mode #themeToggle {
   cursor: pointer;
   font-size: 20px;
   align-self: flex-end;
+}
+  
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 350px;
+  text-align: center;
+}
+
+.payment-tabs {
+  display: flex;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.pay-tab {
+  flex: 1;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.pay-tab.active {
+  background: black;
+  color: white;
+}
+
+.pay-content {
+  display: none;
+}
+
+.pay-content.active {
+  display: block;
+}
+
+#countdown {
+  font-size: 20px;
+  margin: 15px 0;
+  font-weight: bold;
 }
 
 
