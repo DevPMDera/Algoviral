@@ -86,6 +86,43 @@
   
   
   
+  <div id="paymentModal" class="modal">
+  <div class="modal-content">
+
+    <span id="closePaymentModal">&times;</span>
+
+    <h2>Complete Payment</h2>
+    <p id="payment-order-id"></p>
+
+    <!-- TABS -->
+    <div class="payment-tabs">
+      <button class="pay-tab active" data-tab="bank">Bank Transfer</button>
+      <button class="pay-tab" data-tab="crypto">Crypto</button>
+    </div>
+
+    <!-- BANK -->
+    <div class="pay-content active" id="bank">
+      <p><strong>Bank:</strong> OPay</p>
+      <p><strong>Account Name:</strong> Your Name</p>
+      <p><strong>Account Number:</strong> 8123456789</p>
+    </div>
+
+    <!-- CRYPTO -->
+    <div class="pay-content" id="crypto">
+      <p>USDT (TRC20): TXXXXXXX</p>
+      <p>BTC: bc1xxxxx</p>
+    </div>
+
+    <!-- TIMER -->
+    <p id="countdown">15:00</p>
+
+    <button id="paidBtn">I’ve Paid</button>
+
+  </div>
+</div>
+  
+  
+  
   
   
   
