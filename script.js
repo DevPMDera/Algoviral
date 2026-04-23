@@ -167,6 +167,7 @@ const quantityField = document.getElementById('modal-quantity');
 const chargeField = document.getElementById('modal-charge');
 
 let currentPrice = 0;
+let currentOrderId = "";
 
 // OPEN MODAL
 document.addEventListener('click', (e) => {
@@ -220,7 +221,8 @@ document.getElementById('confirmOrder').addEventListener('click', () => {
   const link = linkField.value;
   const quantity = quantityField.value;
   const charge = chargeField.value;
-
+  currentOrderId = "ORD-" + Date.now();
+  
  if (!link || !quantity || !charge) {
   alert("Please fill all fields");
   return;
@@ -231,17 +233,27 @@ fetch("https://hook.eu1.make.com/cc7ua14hn8ya11ofj6o5nrnhffsclusm", {
   headers: {
     "Content-Type": "application/json"
   },
-  body: JSON.stringify({
-    category,
-    description,
-    link,
-    quantity,
-    charge
-  }),
+ body: JSON.stringify({
+  orderId: currentOrderId,
+  category,
+  description,
+  link,
+  quantity,
+  charge
+}),
 })
 .then(() => {
-  alert("Order sent successfully!");
+  alert("Order sent!");
+
   modal.style.display = "none";
+
+  // OPEN PAYMENT MODAL
+  document.getElementById('paymentModal').style.display = "flex";
+
+  document.getElementById('payment-order-id').textContent =
+    "Order ID: " + currentOrderId;
+
+  startTimer();
 })
 .catch(() => {
   alert("Failed to send order");
@@ -250,4 +262,71 @@ fetch("https://hook.eu1.make.com/cc7ua14hn8ya11ofj6o5nrnhffsclusm", {
   linkField.value = "";
 quantityField.value = "";
 chargeField.value = "";
+});
+
+
+
+let timerInterval;
+
+function startTimer() {
+  let time = 15 * 60; // 15 mins
+
+  const display = document.getElementById("countdown");
+
+  clearInterval(timerInterval);
+
+  timerInterval = setInterval(() => {
+    let minutes = Math.floor(time / 60);
+    let seconds = time % 60;
+
+    display.textContent =
+      `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+
+    time--;
+
+    if (time < 0) {
+      clearInterval(timerInterval);
+      document.getElementById('paymentModal').style.display = "none";
+      alert("Payment time expired");
+    }
+  }, 1000);
+}
+
+
+document.querySelectorAll('.pay-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.pay-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.pay-content').forEach(c => c.classList.remove('active'));
+
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
+
+
+document.getElementById('paidBtn').addEventListener('click', () => {
+
+  if (!currentOrderId) {
+    alert("No active order");
+    return;
+  }
+
+  fetch("https://hook.eu1.make.com/f1nbuumrnvavkbs9ek7089tf7r89mq9v", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      status: "PAID",
+      orderId: currentOrderId
+    })
+  })
+  .then(() => {
+    alert("Payment notification sent!");
+    document.getElementById('paymentModal').style.display = "none";
+  })
+  .catch(() => {
+    alert("Failed to notify");
+  });
+
 });
