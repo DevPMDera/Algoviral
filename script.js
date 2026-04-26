@@ -211,9 +211,11 @@ const descriptionField = document.getElementById('modal-description');
 const linkField = document.getElementById('modal-link');
 const quantityField = document.getElementById('modal-quantity');
 const chargeField = document.getElementById('modal-charge');
+const emailField = document.getElementById('modal-email');
 
 let currentPrice = 0;
 let currentOrderId = "";
+let currentOrderData = {}; 
 
 // OPEN MODAL
 document.addEventListener('click', (e) => {
@@ -239,6 +241,14 @@ closeModal.addEventListener('click', () => {
   modal.style.display = "none";
 });
 
+const paymentModal = document.getElementById('paymentModal');
+const closePaymentModal = document.getElementById('closePaymentModal');
+
+closePaymentModal?.addEventListener('click', () => {
+  paymentModal.style.display = "none";
+  notify("Payment window closed", "info");
+});
+
 // CLOSE ON OUTSIDE CLICK
 window.addEventListener('click', (e) => {
   if (e.target === modal) {
@@ -262,14 +272,26 @@ quantityField.addEventListener('input', () => {
 
 
 document.getElementById('confirmOrder').addEventListener('click', () => {
-  const category = categoryField.value;
-  const description = descriptionField.value;
-  const link = linkField.value;
-  const quantity = quantityField.value;
-  const charge = chargeField.value;
-  currentOrderId = "ORD-" + Date.now();
   
- if (!link || !quantity || !charge) {
+  const urlPattern = /^(https?:\/\/)?([\w-]+\.)+[\w-]{2,}(\/.*)?$/;
+
+if (!urlPattern.test(linkField.value.trim())) {
+  notify("Please enter a valid link", "warning");
+  return;
+}
+
+  currentOrderData = {
+    orderId: "ORD-" + Date.now(),
+    category: categoryField.value,
+    description: descriptionField.value,
+    link: linkField.value,
+    quantity: quantityField.value,
+    charge: chargeField.value
+  };
+
+  currentOrderId = currentOrderData.orderId;
+  
+if (!currentOrderData.link || !currentOrderData.quantity || !currentOrderData.charge) {
   notify("Please fill all fields", "warning");
   return;
 }
@@ -279,14 +301,7 @@ fetch("https://hook.eu1.make.com/cc7ua14hn8ya11ofj6o5nrnhffsclusm", {
   headers: {
     "Content-Type": "application/json"
   },
- body: JSON.stringify({
-  orderId: currentOrderId,
-  category,
-  description,
-  link,
-  quantity,
-  charge
-}),
+ body: JSON.stringify(currentOrderData),
 })
 .then(() => {
   notify("Order sent!", "success");
@@ -357,22 +372,48 @@ document.getElementById('paidBtn').addEventListener('click', () => {
     return;
   }
 
-  fetch("https://hook.eu1.make.com/f1nbuumrnvavkbs9ek7089tf7r89mq9v", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      status: "PAID",
-      orderId: currentOrderId
-    })
-  })
+ const email = emailField.value;
+  
+  if (!email || !email.includes("@")) {
+  notify("Enter a valid email", "warning");
+  return;
+}
+
+fetch("https://hook.eu1.make.com/f1nbuumrnvavkbs9ek7089tf7r89mq9v", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+body: JSON.stringify({
+  status: "PAID",
+  email,
+  ...currentOrderData
+})
+})
   .then(() => {
     notify("Payment notification sent!", "success");
     document.getElementById('paymentModal').style.display = "none";
+  
+  currentOrderData = {};
+currentOrderId = "";
   })
   .catch(() => {
     notify("Failed to notify", "error");
   });
 
+});
+
+
+const copyBtn = document.getElementById("copyBtn");
+
+copyBtn.addEventListener("click", () => {
+  const accountNumber = document.getElementById("accountNumber").textContent;
+
+  navigator.clipboard.writeText(accountNumber)
+    .then(() => {
+      notify("Account number copied!", "success");
+    })
+    .catch(() => {
+      notify("Failed to copy", "error");
+    });
 });
