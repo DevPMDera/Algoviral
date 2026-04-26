@@ -72,7 +72,7 @@
     <textarea id="modal-description" readonly></textarea>
 
     <label>Link</label>
-    <input type="text" id="modal-link" placeholder="Enter post/profile link">
+    <input type="url" id="modal-link" placeholder="Enter your post/profile link">
 
     <label>Quantity</label>
     <input type="number" id="modal-quantity" placeholder="Enter quantity">
@@ -106,8 +106,8 @@
     <!-- BANK -->
     <div class="pay-content active" id="bank">
       <p><strong>Bank:</strong> OPay</p>
-      <p><strong>Account Name:</strong> Your Name</p>
-      <p><strong>Account Number:</strong> 8123456789</p>
+      <p><strong>Account Name:</strong> Nweke Chidera</p>
+      <p><strong>Account Number:</strong><span id="accountNumber"> 1234567890</span> &nbsp<img src="https://cdn-icons-png.flaticon.com/128/1827/1827973.png" alt="copy" class="copy-btn" id="copyBtn"></p>
     </div>
 
     <!-- CRYPTO -->
@@ -115,9 +115,11 @@
       <p>USDT (TRC20): TXXXXXXX</p>
       <p>BTC: bc1xxxxx</p>
     </div>
+    
+    <input type="email" id="modal-email" placeholder="Enter your email (for receipt)" required>
 
     <!-- TIMER -->
-    <p id="countdown">15:00</p>
+    <div class="expiration-countdown">Expires in: &nbsp <div id="countdown">15:00</div></div>
 
     <button id="paidBtn">I’ve Paid</button>
 
