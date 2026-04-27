@@ -80,9 +80,9 @@ const data = {
     { name: "Shares", price: 600, speed: "Instant" }
   ],
   tiktok: [
-    { name: "Likes", price: 400, speed: "Instant" },
-    { name: "Followers", price: 1200, speed: "1 Hour" },
-    { name: "Views", price: 200, speed: "Instant" },
+    { name: "Likes", price: 9850, speed: "10 Hours" },
+    { name: "Nigerian Followers", price: 18300, speed: "1 Day" },
+    { name: "Fast Views", price: 10500, speed: "Instant" },
     { name: "Comments", price: 700, speed: "30 mins" },
     { name: "Shares", price: 500, speed: "Instant" }
   ],
