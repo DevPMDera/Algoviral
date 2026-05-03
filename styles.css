@@ -294,6 +294,12 @@ body.dark-mode #themeToggle {
   border: 1px solid #ccc;
 }
 
+.min-max-label{
+  font-size: 14px;
+  color: rgba(50, 50, 50, 0.5);
+  margin: 3px;
+}
+
 #orderModal h2{
   margin-bottom: 15px;
   padding-top: 10px;
