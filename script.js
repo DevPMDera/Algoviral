@@ -96,11 +96,12 @@ const data = {
     { name: "Impressions", price: 19000, speed: "Fast" }
   ],
   youtube: [
-    { name: "Likes", price: 700, speed: "Instant" },
-    { name: "Followers", price: 1000, speed: "2 Hours" },
-    { name: "Retweets", price: 600, speed: "Instant" },
-    { name: "Replies", price: 700, speed: "1 Hour" },
-    { name: "Impressions", price: 19000, speed: "Fast" }
+    { name: "Views(Low Drop)", price: 22000, speed: "1K-2K/Day" },
+    { name: "Views(SuperFast)", price: 34600, speed: "2-4 Hours" },
+    { name: "Subscribers", price: 105000, speed: "500-1K/Day" },
+    { name: "Likes", price: 32760, speed: "6 Hours" },
+    { name: "Dislikes", price: 57200, speed: "200-400/Day" },
+    { name: "Custom Comments", price: 61700, speed: "2 Hour" },
   ]
 };
 
