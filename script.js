@@ -77,29 +77,26 @@ const data = {
     { name: "Followers", price: 12850, speed: "3 - 6 Hours" },
     { name: "Reels Views", price: 6500, speed: "Instant" },
     { name: "Custom Comments", price: 25200, speed: "2 Hours" },
-    { name: "Random Comments", price: 7550, speed: "8 Hours" },
-    { name: "Shares", price: 600, speed: "Instant" }
+    { name: "Random Comments", price: 7550, speed: "8 Hours" }
   ],
   tiktok: [
     { name: "Likes", price: 9850, speed: "10 Hours" },
     { name: "Nigerian Followers", price: 18300, speed: "1 Day" },
-    { name: "Fast Views", price: 10500, speed: "Instant" },
-    { name: "Comments", price: 700, speed: "30 mins" },
-    { name: "Shares", price: 500, speed: "Instant" }
+    { name: "Fast Views", price: 10500, speed: "Instant" }
   ],
   twitter: [
-    { name: "Likes", price: 300, speed: "Instant" },
-    { name: "Followers", price: 38850, speed: "2 Hours" },
-    { name: "Retweets", price: 600, speed: "Instant" },
-    { name: "Replies", price: 700, speed: "1 Hour" },
-    { name: "Impressions", price: 900, speed: "Fast" }
+    { name: "Likes", price: 32200, speed: "8 Hours" },
+    { name: "Followers", price: 38850, speed: "6 Hours" },
+    { name: "Retweets", price: 29600, speed: "6 Hours" },
+    { name: "Custom Comments", price: 159600, speed: "24 Hour" },
+    { name: "Impressions", price: 19000, speed: "Fast" }
   ],
   youtube: [
     { name: "Likes", price: 700, speed: "Instant" },
     { name: "Followers", price: 1000, speed: "2 Hours" },
     { name: "Retweets", price: 600, speed: "Instant" },
     { name: "Replies", price: 700, speed: "1 Hour" },
-    { name: "Impressions", price: 900, speed: "Fast" }
+    { name: "Impressions", price: 19000, speed: "Fast" }
   ]
 };
 
