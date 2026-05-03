@@ -62,8 +62,66 @@ const searchForm = document.querySelector('.search-bar');
 
 searchForm?.addEventListener('submit', (e) => {
   e.preventDefault();
-  const query = document.getElementById('searchInput').value.toLowerCase();
-  notify("You searched for: " + query, "info");
+
+  const query = document
+    .getElementById('searchInput')
+    .value
+    .toLowerCase()
+    .trim();
+
+  if (!query) return;
+
+  let found = false;
+
+  // Loop through your data
+  Object.keys(data).forEach(platform => {
+    const matches = data[platform].filter(service =>
+      service.name.toLowerCase().includes(query)
+    );
+
+    if (matches.length > 0) {
+      found = true;
+
+      // 👉 Switch to correct tab
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.tab === platform);
+      });
+
+      document.querySelectorAll('.tab-content').forEach(section => {
+        section.classList.toggle('active', section.id === platform);
+      });
+
+      // 👉 Render ONLY matched results
+      const section = document.getElementById(platform);
+      section.innerHTML = matches.map(service => `
+        <div class="card">
+          <h3>${service.name}</h3>
+          <p class="price">₦${service.price}</p>
+          <p class="per-room-txt">(per 1000)</p>
+          <p class="speed">${service.speed}</p>
+          <button class="buy-btn"
+            data-platform="${platform}"
+            data-name="${service.name}"
+            data-price="${service.price}">
+            Buy Now
+          </button>
+        </div>
+      `).join('');
+    }
+  });
+
+  if (!found) {
+    notify("No service found for: " + query, "warning");
+  } else {
+    notify("Results for: " + query, "success");
+  }
+});
+
+
+document.getElementById('searchInput').addEventListener('input', (e) => {
+  if (!e.target.value.trim()) {
+    renderServices(); // restore all services
+  }
 });
 
 
